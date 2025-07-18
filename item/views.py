@@ -141,11 +141,9 @@ def new(request):
     else:
         form = NewItemForm()
 
-    categories = Category.objects.filter(is_active=True).order_by('name')
     return render(request, 'item/form.html', {
         'form': form,
         'title': 'New item',
-        'categories': categories,
     })
 
 @login_required

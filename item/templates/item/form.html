@@ -39,18 +39,32 @@
             <div>
                 <label class="block text-sm font-semibold text-gray-900 mb-3">
                     <i class="fas fa-tag text-primary-600 mr-2"></i>
-                    Category
+                    Category *
                 </label>
                 {{ form.category }}
+                {% if form.category.errors %}
+                    <div class="mt-1 text-sm text-red-600">
+                        {% for error in form.category.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <!-- Item Name -->
             <div>
                 <label class="block text-sm font-semibold text-gray-900 mb-3">
                     <i class="fas fa-box text-primary-600 mr-2"></i>
-                    Item Name
+                    Item Name *
                 </label>
                 {{ form.name }}
+                {% if form.name.errors %}
+                    <div class="mt-1 text-sm text-red-600">
+                        {% for error in form.name.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <!-- Description -->
@@ -67,14 +81,21 @@
             <div>
                 <label class="block text-sm font-semibold text-gray-900 mb-3">
                     <i class="fas fa-dollar-sign text-primary-600 mr-2"></i>
-                    Price
+                    Price (KSh) *
                 </label>
                 <div class="relative">
-                    <span class="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">$</span>
+                    <span class="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">KSh</span>
                     <div class="pl-8">
                         {{ form.price }}
                     </div>
                 </div>
+                {% if form.price.errors %}
+                    <div class="mt-1 text-sm text-red-600">
+                        {% for error in form.price.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
 
             <!-- Is Sold (for edit form) -->

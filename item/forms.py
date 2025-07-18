@@ -11,7 +11,8 @@ class NewItemForm(forms.ModelForm):
                  'image', 'image_2', 'image_3', 'image_4', 'image_5')
         widgets = {
             'category': forms.Select(attrs={
-                'class': INPUT_CLASSES
+                'class': INPUT_CLASSES,
+                'required': True
             }),
             'name': forms.TextInput(attrs={
                 'class': INPUT_CLASSES,
@@ -65,6 +66,11 @@ class NewItemForm(forms.ModelForm):
                 'accept': 'image/*'
             }),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(is_active=True).order_by('name')
+        self.fields['category'].empty_label = "Select a category"
 
 class EditItemForm(forms.ModelForm):
     class Meta:
@@ -129,6 +135,11 @@ class EditItemForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['category'].queryset = Category.objects.filter(is_active=True).order_by('name')
+        self.fields['category'].empty_label = "Select a category"
+
 class ItemFilterForm(forms.Form):
     SORT_CHOICES = [
         ('newest', 'Newest First'),
@@ -163,7 +174,7 @@ class ItemFilterForm(forms.Form):
         required=False,
         min_value=0,
         widget=forms.NumberInput(attrs={
-            'placeholder': 'Min price',
+            'placeholder': 'Min price (KSh)',
             'class': 'flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500'
         })
     )
@@ -171,7 +182,7 @@ class ItemFilterForm(forms.Form):
         required=False,
         min_value=0,
         widget=forms.NumberInput(attrs={
-            'placeholder': 'Max price',
+            'placeholder': 'Max price (KSh)',
             'class': 'flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500'
         })
     )

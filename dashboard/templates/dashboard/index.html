@@ -242,7 +242,7 @@
                                         <h4 class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors duration-200">
                                             <a href="{% url 'item:detail' item.id %}">{{ item.name }}</a>
                                         </h4>
-                                        <span class="text-lg font-bold text-primary-600">${{ item.price }}</span>
+                                        <span class="text-lg font-bold text-primary-600">KSh {{ item.price }}</span>
                                     </div>
                                     
                                     <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ item.description|default:"No description" }}</p>

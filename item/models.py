@@ -4,110 +4,18 @@ from cloudinary.models import CloudinaryField
 
 class Category(models.Model):
     CATEGORY_TYPES = [
-        # Electronics & Technology
-        ('electronics', 'Electronics & Technology'),
-        ('phones_tablets', 'Phones & Tablets'),
-        ('computers_laptops', 'Computers & Laptops'),
-        ('cameras_photo', 'Cameras & Photography'),
-        ('audio_headphones', 'Audio & Headphones'),
-        ('gaming_consoles', 'Gaming & Consoles'),
-        ('smart_home', 'Smart Home & IoT'),
-        ('wearable_tech', 'Wearable Technology'),
-        
-        # Vehicles & Transportation
-        ('cars', 'Cars & Automobiles'),
-        ('motorcycles', 'Motorcycles & Scooters'),
-        ('bicycles', 'Bicycles & E-bikes'),
-        ('trucks_commercial', 'Trucks & Commercial Vehicles'),
-        ('auto_parts', 'Auto Parts & Accessories'),
-        ('boats_marine', 'Boats & Marine'),
-        
-        # Real Estate & Property
-        ('houses_sale', 'Houses for Sale'),
-        ('apartments_rent', 'Apartments for Rent'),
-        ('commercial_property', 'Commercial Property'),
-        ('land_plots', 'Land & Plots'),
-        ('vacation_rentals', 'Vacation Rentals'),
-        
-        # Fashion & Beauty
-        ('mens_clothing', "Men's Clothing"),
-        ('womens_clothing', "Women's Clothing"),
-        ('shoes_footwear', 'Shoes & Footwear'),
-        ('bags_accessories', 'Bags & Accessories'),
-        ('jewelry_watches', 'Jewelry & Watches'),
-        ('beauty_cosmetics', 'Beauty & Cosmetics'),
-        
-        # Home & Garden
-        ('furniture', 'Furniture'),
-        ('home_decor', 'Home Decor'),
-        ('kitchen_dining', 'Kitchen & Dining'),
-        ('garden_outdoor', 'Garden & Outdoor'),
-        ('tools_hardware', 'Tools & Hardware'),
-        ('appliances', 'Home Appliances'),
-        
-        # Sports & Recreation
-        ('sports_equipment', 'Sports Equipment'),
-        ('fitness_gym', 'Fitness & Gym'),
-        ('outdoor_camping', 'Outdoor & Camping'),
-        ('bicycles_sports', 'Sports Bicycles'),
-        ('water_sports', 'Water Sports'),
-        
-        # Services
-        ('professional_services', 'Professional Services'),
-        ('home_services', 'Home Services'),
-        ('tutoring_education', 'Tutoring & Education'),
+        ('electronics', 'Electronics & Appliances'),
+        ('fashion_beauty', 'Fashion & Beauty'),
+        ('home_furniture', 'Home & Furniture'),
+        ('vehicles_auto', 'Vehicles & Auto Parts'),
+        ('property_real_estate', 'Property & Real Estate'),
+        ('jobs_services', 'Jobs & Services'),
+        ('agriculture_food', 'Agriculture & Food'),
         ('health_wellness', 'Health & Wellness'),
-        ('event_services', 'Event Services'),
-        ('business_services', 'Business Services'),
-        ('legal_services', 'Legal Services'),
-        ('financial_services', 'Financial Services'),
-        
-        # Jobs & Employment
-        ('full_time_jobs', 'Full-time Jobs'),
-        ('part_time_jobs', 'Part-time Jobs'),
-        ('freelance_gigs', 'Freelance & Gigs'),
-        ('internships', 'Internships'),
-        ('remote_work', 'Remote Work'),
-        
-        # Baby & Kids
-        ('baby_items', 'Baby Items'),
-        ('kids_clothing', 'Kids Clothing'),
-        ('toys_games', 'Toys & Games'),
-        ('baby_gear', 'Baby Gear'),
-        ('educational_toys', 'Educational Toys'),
-        
-        # Books & Media
-        ('books', 'Books'),
-        ('movies_music', 'Movies & Music'),
-        ('magazines', 'Magazines'),
-        ('educational_materials', 'Educational Materials'),
-        
-        # Pets & Animals
-        ('pets_sale', 'Pets for Sale'),
-        ('pet_supplies', 'Pet Supplies'),
-        ('pet_services', 'Pet Services'),
-        ('livestock', 'Livestock'),
-        
-        # Food & Agriculture
-        ('fresh_produce', 'Fresh Produce'),
-        ('packaged_foods', 'Packaged Foods'),
-        ('agricultural_products', 'Agricultural Products'),
-        ('farming_equipment', 'Farming Equipment'),
-        
-        # Art & Collectibles
-        ('artwork', 'Artwork'),
-        ('antiques', 'Antiques'),
-        ('collectibles', 'Collectibles'),
-        ('crafts_handmade', 'Crafts & Handmade'),
-        
-        # Business & Industrial
-        ('office_supplies', 'Office Supplies'),
-        ('industrial_equipment', 'Industrial Equipment'),
-        ('business_equipment', 'Business Equipment'),
-        ('wholesale_bulk', 'Wholesale & Bulk'),
-        
-        # Other
-        ('other', 'Other'),
+        ('kids_baby', 'Kids & Baby'),
+        ('education_training', 'Education & Training'),
+        ('events_entertainment', 'Events & Entertainment'),
+        ('others', 'Others'),
     ]
     
     name = models.CharField(max_length=255)
