@@ -1,0 +1,221 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Frequently Asked Questions{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="text-center">
+        <div class="w-20 h-20 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-question-circle text-yellow-600 text-3xl"></i>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>
+        <p class="text-xl text-gray-600">Quick answers to common questions about Matrix Marketplace</p>
+    </div>
+
+    <!-- Search FAQ -->
+    <div class="max-w-2xl mx-auto">
+        <div class="relative">
+            <input type="text" id="faqSearch" placeholder="Search FAQs..." class="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 text-lg">
+            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
+        </div>
+    </div>
+
+    <!-- FAQ Categories -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button onclick="filterFAQ('all')" class="faq-filter active bg-primary-600 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+            All Questions
+        </button>
+        <button onclick="filterFAQ('buying')" class="faq-filter bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+            Buying
+        </button>
+        <button onclick="filterFAQ('selling')" class="faq-filter bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+            Selling
+        </button>
+        <button onclick="filterFAQ('account')" class="faq-filter bg-gray-200 text-gray-700 hover:bg-gray-300 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+            Account
+        </button>
+    </div>
+
+    <!-- FAQ Items -->
+    <div class="space-y-4" id="faqContainer">
+        <!-- General Questions -->
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="general">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>What is Matrix Marketplace?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Matrix Marketplace is a B2B platform connecting buyers with verified suppliers worldwide. We facilitate secure transactions and provide tools for successful business relationships.</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Buying Questions -->
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="buying">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>How do I find reliable suppliers?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Look for verified suppliers with good ratings, complete profiles, and positive reviews. Use our supplier verification tools and always communicate directly before placing orders.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="buying">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>What payment methods are accepted?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">We accept major credit cards, bank transfers, and mobile money payments. All transactions are secured with our buyer protection program.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="buying">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>How does order protection work?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Our order protection covers you if items don't arrive, don't match the description, or are damaged. You can request a full refund or replacement within our protection period.</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Selling Questions -->
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="selling">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>How do I become a verified supplier?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Complete your business profile, provide required documentation (business license, certifications), maintain good seller ratings, and pass our verification process.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="selling">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>What are the selling fees?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Basic listings are free. We charge a small commission (3-5%) only when you successfully complete a sale. Premium features and advertising have additional costs.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="selling">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>How do I optimize my product listings?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Use high-quality photos, write detailed descriptions, set competitive prices, respond quickly to inquiries, and maintain good customer service to improve your rankings.</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- Account Questions -->
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="account">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>How do I update my profile information?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Go to your Dashboard, click on Profile, and update your information. Make sure to save changes and verify any new contact information.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="account">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>How do I reset my password?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Click "Forgot Password" on the login page, enter your email address, and follow the instructions in the reset email we send you.</p>
+                </div>
+            </details>
+        </div>
+
+        <div class="faq-item bg-white rounded-2xl shadow-sm" data-category="account">
+            <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-6 text-gray-900 font-medium">
+                    <span>Can I delete my account?</span>
+                    <i class="fas fa-chevron-down group-open:rotate-180 transition-transform duration-200"></i>
+                </summary>
+                <div class="px-6 pb-6">
+                    <p class="text-gray-600">Yes, you can delete your account from Settings. Note that this action is permanent and will remove all your data, listings, and transaction history.</p>
+                </div>
+            </details>
+        </div>
+    </div>
+
+    <!-- Contact Support -->
+    <div class="bg-gradient-to-r from-yellow-500 to-yellow-700 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-4">Didn't Find Your Answer?</h2>
+        <p class="mb-6">Our support team is here to help you with any questions.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'core:contact' %}" class="bg-white text-yellow-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+                Contact Support
+            </a>
+            <a href="https://wa.me/254712345678" class="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200">
+                <i class="fab fa-whatsapp mr-2"></i>WhatsApp Chat
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+function filterFAQ(category) {
+    const items = document.querySelectorAll('.faq-item');
+    const filters = document.querySelectorAll('.faq-filter');
+    
+    // Update filter buttons
+    filters.forEach(filter => {
+        filter.classList.remove('active', 'bg-primary-600', 'text-white');
+        filter.classList.add('bg-gray-200', 'text-gray-700');
+    });
+    
+    event.target.classList.add('active', 'bg-primary-600', 'text-white');
+    event.target.classList.remove('bg-gray-200', 'text-gray-700');
+    
+    // Filter items
+    items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+// Search functionality
+document.getElementById('faqSearch').addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const items = document.querySelectorAll('.faq-item');
+    
+    items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(searchTerm)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

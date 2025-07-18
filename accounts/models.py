@@ -42,6 +42,9 @@ class UserProfile(models.Model):
     sms_notifications = models.BooleanField(default=False)
     marketing_emails = models.BooleanField(default=False)
     
+    # Theme preference
+    theme_preference = models.CharField(max_length=10, choices=[('light', 'Light'), ('dark', 'Dark')], default='light')
+    
     def __str__(self):
         return f"{self.user.username}'s Profile"
     

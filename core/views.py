@@ -16,6 +16,24 @@ def index(request):
 def contact(request):
     return render(request, 'core/contact.html')
 
+def featured(request):
+    return render(request, 'core/featured.html')
+
+def order_protection(request):
+    return render(request, 'core/order_protection.html')
+
+def become_supplier(request):
+    return render(request, 'core/become_supplier.html')
+
+def help_center(request):
+    return render(request, 'core/help_center.html')
+
+def buyer_central(request):
+    return render(request, 'core/buyer_central.html')
+
+def faq(request):
+    return render(request, 'core/faq.html')
+
 def signup(request):
     if request.method == 'POST':
         form = SignupForm(request.POST)

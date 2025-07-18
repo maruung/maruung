@@ -1,0 +1,177 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Buyer Central{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="text-center">
+        <div class="w-20 h-20 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-user-tie text-indigo-600 text-3xl"></i>
+        </div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">Buyer Central</h1>
+        <p class="text-xl text-gray-600">Your complete guide to successful buying on Matrix Marketplace</p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div class="bg-white rounded-2xl shadow-sm p-6 text-center">
+            <div class="text-3xl font-bold text-primary-600 mb-2">50K+</div>
+            <div class="text-sm text-gray-600">Active Suppliers</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm p-6 text-center">
+            <div class="text-3xl font-bold text-green-600 mb-2">1M+</div>
+            <div class="text-sm text-gray-600">Products Available</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm p-6 text-center">
+            <div class="text-3xl font-bold text-orange-600 mb-2">99.8%</div>
+            <div class="text-sm text-gray-600">Order Success Rate</div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm p-6 text-center">
+            <div class="text-3xl font-bold text-purple-600 mb-2">24/7</div>
+            <div class="text-sm text-gray-600">Customer Support</div>
+        </div>
+    </div>
+
+    <!-- Buying Guide -->
+    <div class="bg-white rounded-2xl shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">How to Buy Successfully</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-blue-600">1</span>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">Research & Compare</h3>
+                <p class="text-gray-600">Use our advanced search and filters to find the best products and suppliers for your needs.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-green-600">2</span>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">Contact & Negotiate</h3>
+                <p class="text-gray-600">Communicate directly with suppliers to discuss pricing, customization, and shipping terms.</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-2xl font-bold text-purple-600">3</span>
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">Order & Track</h3>
+                <p class="text-gray-600">Place your order with confidence using our secure payment system and track delivery.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buyer Tools -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl shadow-sm p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Buyer Tools & Resources</h2>
+            <div class="space-y-4">
+                <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-calculator text-blue-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Price Calculator</h3>
+                        <p class="text-sm text-gray-600">Calculate total costs including shipping and taxes</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-green-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Supplier Verification</h3>
+                        <p class="text-sm text-gray-600">Check supplier credentials and ratings</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-file-contract text-orange-600"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Contract Templates</h3>
+                        <p class="text-sm text-gray-600">Download standard purchase agreement templates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-sm p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Safety Tips</h2>
+            <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Verify Supplier Credentials</h3>
+                        <p class="text-sm text-gray-600">Always check business licenses and certifications</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Use Secure Payment Methods</h3>
+                        <p class="text-sm text-gray-600">Avoid wire transfers to unknown suppliers</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Request Product Samples</h3>
+                        <p class="text-sm text-gray-600">Test quality before placing large orders</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-3">
+                    <i class="fas fa-check-circle text-green-600 mt-1"></i>
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Read Terms Carefully</h3>
+                        <p class="text-sm text-gray-600">Understand shipping, returns, and warranty policies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Market Insights -->
+    <div class="bg-white rounded-2xl shadow-sm p-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Market Insights</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl">
+                <i class="fas fa-trending-up text-blue-600 text-3xl mb-4"></i>
+                <h3 class="font-semibold text-gray-900 mb-2">Trending Categories</h3>
+                <p class="text-sm text-gray-600">Electronics, Home & Garden, Fashion</p>
+            </div>
+            
+            <div class="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
+                <i class="fas fa-globe text-green-600 text-3xl mb-4"></i>
+                <h3 class="font-semibold text-gray-900 mb-2">Top Supplier Countries</h3>
+                <p class="text-sm text-gray-600">China, Kenya, USA, Germany, India</p>
+            </div>
+            
+            <div class="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl">
+                <i class="fas fa-clock text-purple-600 text-3xl mb-4"></i>
+                <h3 class="font-semibold text-gray-900 mb-2">Average Response Time</h3>
+                <p class="text-sm text-gray-600">2 hours for verified suppliers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Get Started -->
+    <div class="bg-gradient-to-r from-indigo-500 to-indigo-700 rounded-2xl p-8 text-white text-center">
+        <h2 class="text-2xl font-bold mb-4">Ready to Start Buying?</h2>
+        <p class="mb-6">Join thousands of successful buyers on Matrix Marketplace today.</p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'item:items' %}" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200">
+                Browse Products
+            </a>
+            <a href="{% url 'core:signup' %}" class="bg-indigo-800 hover:bg-indigo-900 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200">
+                Create Account
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -182,7 +182,7 @@ class ItemFilterForm(forms.Form):
         required=False,
         min_value=0,
         widget=forms.NumberInput(attrs={
-            'placeholder': 'Max price (KSh)',
+            'placeholder': 'Max price KSh',
             'class': 'flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500'
         })
     )
@@ -190,7 +190,7 @@ class ItemFilterForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={
             'placeholder': 'Location...',
-            'class': 'w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500'
+            'placeholder': 'Min price KSh',
         })
     )
     delivery_available = forms.BooleanField(required=False)
