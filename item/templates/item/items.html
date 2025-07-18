@@ -1,0 +1,306 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Browse Items{% endblock %}
+
+{% block content %}
+<div x-data="{ 
+    viewMode: 'grid',
+    sortBy: 'newest',
+    priceRange: [0, 1000],
+    showFilters: false
+}" class="space-y-6">
+    
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">Browse Items</h1>
+            <p class="text-gray-600 mt-1">Discover amazing deals from our community</p>
+        </div>
+        
+        <!-- View Controls -->
+        <div class="flex items-center space-x-4">
+            <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                <button @click="viewMode = 'grid'" 
+                        :class="viewMode === 'grid' ? 'bg-white shadow-sm' : ''"
+                        class="p-2 rounded-md transition-all duration-200">
+                    <i class="fas fa-th text-gray-600"></i>
+                </button>
+                <button @click="viewMode = 'list'" 
+                        :class="viewMode === 'list' ? 'bg-white shadow-sm' : ''"
+                        class="p-2 rounded-md transition-all duration-200">
+                    <i class="fas fa-list text-gray-600"></i>
+                </button>
+            </div>
+            
+            <select x-model="sortBy" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="popular">Most Popular</option>
+            </select>
+            
+            <button @click="showFilters = !showFilters" 
+                    class="lg:hidden bg-primary-600 text-white px-4 py-2 rounded-lg font-medium">
+                <i class="fas fa-filter mr-2"></i>Filters
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- Filters Sidebar -->
+        <div :class="showFilters ? 'block' : 'hidden lg:block'" class="lg:col-span-1">
+            <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-24">
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-filter text-primary-600 mr-2"></i>
+                    Filters
+                </h3>
+                
+                <!-- Search -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                    <form method="get" action="{% url 'item:items' %}">
+                        <div class="relative">
+                            <input name="query" 
+                                   value="{{ query }}" 
+                                   placeholder="Search items..." 
+                                   class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                            <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+                        <button type="submit" class="w-full mt-3 bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-lg font-medium transition-colors duration-200">
+                            Search
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Categories -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Categories</label>
+                    <div class="space-y-2 max-h-48 overflow-y-auto">
+                        <a href="{% url 'item:items' %}?query={{ query }}" 
+                           class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors duration-150 {% if not category_id %}bg-primary-50 text-primary-700{% endif %}">
+                            <span class="text-sm">All Categories</span>
+                            <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">{{ items|length }}</span>
+                        </a>
+                        {% for category in categories %}
+                            <a href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}" 
+                               class="flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 transition-colors duration-150 {% if category.id == category_id %}bg-primary-50 text-primary-700{% endif %}">
+                                <span class="text-sm">{{ category.name }}</span>
+                                <span class="text-xs bg-gray-200 px-2 py-1 rounded-full">{{ category.items.count }}</span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Price Range -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Price Range</label>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-2">
+                            <input type="number" placeholder="Min" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <span class="text-gray-500">-</span>
+                            <input type="number" placeholder="Max" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500">
+                        </div>
+                        <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Condition -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">Condition</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                            <span class="ml-2 text-sm text-gray-700">New</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                            <span class="ml-2 text-sm text-gray-700">Like New</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                            <span class="ml-2 text-sm text-gray-700">Good</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500">
+                            <span class="ml-2 text-sm text-gray-700">Fair</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Clear Filters -->
+                <a href="{% url 'item:items' %}" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center">
+                    <i class="fas fa-times mr-2"></i>
+                    Clear All Filters
+                </a>
+            </div>
+        </div>
+
+        <!-- Items Grid/List -->
+        <div class="lg:col-span-3">
+            <!-- Results Header -->
+            <div class="flex items-center justify-between mb-6 p-4 bg-white rounded-lg shadow-sm">
+                <div class="text-sm text-gray-600">
+                    Showing <span class="font-semibold">{{ items|length }}</span> results
+                    {% if query %}for "<span class="font-semibold">{{ query }}</span>"{% endif %}
+                </div>
+                <div class="flex items-center space-x-2 text-sm text-gray-500">
+                    <i class="fas fa-clock"></i>
+                    <span>Updated 2 minutes ago</span>
+                </div>
+            </div>
+
+            <!-- Items Container -->
+            <div x-show="viewMode === 'grid'" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {% for item in items %}
+                    <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
+                        <div class="relative overflow-hidden">
+                            <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-medium">
+                                    Available
+                                </span>
+                            </div>
+                            <div class="absolute top-3 right-3">
+                                <button class="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 transition-colors duration-200">
+                                    <i class="fas fa-heart text-sm"></i>
+                                </button>
+                            </div>
+                            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                                <a href="{% url 'item:detail' item.id %}" class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4">
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-semibold text-gray-900 group-hover:text-primary-600 transition-colors duration-200 line-clamp-1">{{ item.name }}</h3>
+                                <div class="flex items-center space-x-1 text-yellow-500">
+                                    <i class="fas fa-star text-xs"></i>
+                                    <span class="text-xs text-gray-600">4.8</span>
+                                </div>
+                            </div>
+                            
+                            <p class="text-gray-600 text-sm mb-3 line-clamp-2">{{ item.description|default:"No description available" }}</p>
+                            
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xl font-bold text-primary-600">${{ item.price }}</span>
+                                <div class="flex items-center space-x-1 text-xs text-gray-500">
+                                    <i class="fas fa-user"></i>
+                                    <span>{{ item.created_by.username }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between text-xs text-gray-500">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-clock"></i>
+                                    <span>{{ item.created_at|timesince }} ago</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fas fa-eye"></i>
+                                    <span>{{ item.id|add:123 }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="col-span-full text-center py-16">
+                        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-search text-gray-400 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No items found</h3>
+                        <p class="text-gray-600 mb-6">Try adjusting your search criteria or browse all categories.</p>
+                        <a href="{% url 'item:items' %}" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
+                            Browse All Items
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- List View -->
+            <div x-show="viewMode === 'list'" class="space-y-4">
+                {% for item in items %}
+                    <div class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200 p-6">
+                        <div class="flex items-center space-x-6">
+                            <div class="flex-shrink-0">
+                                <img src="{{ item.image.url }}" alt="{{ item.name }}" class="w-24 h-24 object-cover rounded-xl">
+                            </div>
+                            
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-semibold text-gray-900 hover:text-primary-600 transition-colors duration-200">
+                                            <a href="{% url 'item:detail' item.id %}">{{ item.name }}</a>
+                                        </h3>
+                                        <p class="text-gray-600 mt-1 line-clamp-2">{{ item.description|default:"No description available" }}</p>
+                                        
+                                        <div class="flex items-center space-x-4 mt-3 text-sm text-gray-500">
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fas fa-user"></i>
+                                                <span>{{ item.created_by.username }}</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fas fa-clock"></i>
+                                                <span>{{ item.created_at|timesince }} ago</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fas fa-eye"></i>
+                                                <span>{{ item.id|add:123 }} views</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex flex-col items-end space-y-2">
+                                        <span class="text-2xl font-bold text-primary-600">${{ item.price }}</span>
+                                        <div class="flex items-center space-x-2">
+                                            <button class="w-8 h-8 bg-gray-100 hover:bg-red-100 rounded-full flex items-center justify-center text-gray-600 hover:text-red-500 transition-colors duration-200">
+                                                <i class="fas fa-heart text-sm"></i>
+                                            </button>
+                                            <a href="{% url 'item:detail' item.id %}" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                                                View Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="text-center py-16">
+                        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-search text-gray-400 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No items found</h3>
+                        <p class="text-gray-600 mb-6">Try adjusting your search criteria or browse all categories.</p>
+                        <a href="{% url 'item:items' %}" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
+                            Browse All Items
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if items %}
+                <div class="flex items-center justify-center mt-12">
+                    <nav class="flex items-center space-x-2">
+                        <button class="px-3 py-2 text-gray-500 hover:text-gray-700 transition-colors duration-200">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="px-4 py-2 bg-primary-600 text-white rounded-lg font-medium">1</button>
+                        <button class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">2</button>
+                        <button class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">3</button>
+                        <span class="px-2 text-gray-500">...</span>
+                        <button class="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg font-medium transition-colors duration-200">10</button>
+                        <button class="px-3 py-2 text-gray-500 hover:text-gray-700 transition-colors duration-200">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </nav>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

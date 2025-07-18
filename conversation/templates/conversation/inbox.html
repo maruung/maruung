@@ -1,0 +1,183 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Messages{% endblock %}
+
+{% block content %}
+<div x-data="{ selectedConversation: null }" class="h-[calc(100vh-200px)]">
+    <div class="flex h-full bg-white rounded-2xl shadow-sm overflow-hidden">
+        <!-- Conversations List -->
+        <div class="w-1/3 border-r border-gray-200 flex flex-col">
+            <!-- Header -->
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-bold text-gray-900">Messages</h1>
+                    <div class="flex items-center space-x-2">
+                        <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                            <i class="fas fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Search -->
+                <div class="mt-4 relative">
+                    <input type="text" placeholder="Search conversations..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <!-- Conversations -->
+            <div class="flex-1 overflow-y-auto">
+                {% for conversation in conversations %}
+                    <div class="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+                         @click="selectedConversation = {{ conversation.id }}">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="{{ conversation.item.image.url }}" alt="{{ conversation.item.name }}" class="w-12 h-12 object-cover rounded-lg">
+                                <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+                            </div>
+                            
+                            <div class="flex-1 min-w-0">
+                                {% for member in conversation.members.all %}
+                                    {% if member != request.user %}
+                                        <div class="flex items-center justify-between">
+                                            <h3 class="font-semibold text-gray-900 truncate">{{ member.username }}</h3>
+                                            <span class="text-xs text-gray-500">{{ conversation.modified_at|timesince }} ago</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 truncate">{{ conversation.item.name }}</p>
+                                        <p class="text-xs text-gray-500 mt-1">Last message preview...</p>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="flex flex-col items-end space-y-1">
+                                <div class="w-2 h-2 bg-primary-500 rounded-full"></div>
+                                <span class="text-xs text-primary-600 font-medium">${{ conversation.item.price }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="flex flex-col items-center justify-center h-full p-8 text-center">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                            <i class="fas fa-envelope text-gray-400 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">No conversations yet</h3>
+                        <p class="text-gray-600 mb-4">Start browsing items to connect with sellers</p>
+                        <a href="{% url 'item:items' %}" class="bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                            Browse Items
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Chat Area -->
+        <div class="flex-1 flex flex-col">
+            {% if conversations %}
+                <!-- Chat Header -->
+                <div class="p-6 border-b border-gray-200 bg-gray-50">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
+                                <span class="text-white font-semibold text-sm">JD</span>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-gray-900">John Doe</h3>
+                                <p class="text-sm text-green-600 flex items-center">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                    Online
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                                <i class="fas fa-phone"></i>
+                            </button>
+                            <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                                <i class="fas fa-video"></i>
+                            </button>
+                            <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Messages -->
+                <div class="flex-1 overflow-y-auto p-6 space-y-4">
+                    <!-- Sample messages -->
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-xs">JD</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-md p-4 max-w-md">
+                                <p class="text-gray-900">Hi! I'm interested in your gaming chair. Is it still available?</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2:30 PM</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-3 justify-end">
+                        <div class="flex-1 flex justify-end">
+                            <div class="bg-primary-600 text-white rounded-2xl rounded-tr-md p-4 max-w-md">
+                                <p>Yes, it's still available! It's in excellent condition. Would you like to see more photos?</p>
+                            </div>
+                        </div>
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-xs">{{ request.user.username|first|upper }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center">
+                            <span class="text-white font-semibold text-xs">JD</span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="bg-gray-100 rounded-2xl rounded-tl-md p-4 max-w-md">
+                                <p class="text-gray-900">That would be great! Also, are you flexible on the price?</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2:35 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Message Input -->
+                <div class="p-6 border-t border-gray-200 bg-gray-50">
+                    <div class="flex items-center space-x-4">
+                        <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="p-2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <div class="flex-1 relative">
+                            <input type="text" placeholder="Type your message..." class="w-full pl-4 pr-12 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500">
+                            <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-primary-600 transition-colors duration-200">
+                                <i class="fas fa-smile"></i>
+                            </button>
+                        </div>
+                        <button class="bg-primary-600 hover:bg-primary-700 text-white p-3 rounded-xl transition-colors duration-200">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            {% else %}
+                <!-- Empty State -->
+                <div class="flex-1 flex items-center justify-center">
+                    <div class="text-center">
+                        <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-comments text-gray-400 text-3xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Select a conversation</h3>
+                        <p class="text-gray-600">Choose a conversation from the list to start messaging</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

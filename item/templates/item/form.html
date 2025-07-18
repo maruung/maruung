@@ -1,0 +1,153 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ title }}</h1>
+        <p class="text-gray-600">Fill in the details below to list your item</p>
+    </div>
+
+    <!-- Form -->
+    <div class="bg-white rounded-2xl shadow-sm p-8">
+        <form method="post" action="." enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Image Upload -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-3">
+                    <i class="fas fa-camera text-primary-600 mr-2"></i>
+                    Item Photos
+                </label>
+                <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-primary-400 transition-colors duration-200">
+                    <div class="space-y-4">
+                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto">
+                            <i class="fas fa-cloud-upload-alt text-gray-400 text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="text-gray-600 mb-2">Drag and drop your images here, or</p>
+                            {{ form.image }}
+                        </div>
+                        <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-3">
+                    <i class="fas fa-tag text-primary-600 mr-2"></i>
+                    Category
+                </label>
+                {{ form.category }}
+            </div>
+
+            <!-- Item Name -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-3">
+                    <i class="fas fa-box text-primary-600 mr-2"></i>
+                    Item Name
+                </label>
+                {{ form.name }}
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-3">
+                    <i class="fas fa-align-left text-primary-600 mr-2"></i>
+                    Description
+                </label>
+                {{ form.description }}
+                <p class="text-xs text-gray-500 mt-2">Provide detailed information about your item's condition, features, and any relevant details.</p>
+            </div>
+
+            <!-- Price -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-3">
+                    <i class="fas fa-dollar-sign text-primary-600 mr-2"></i>
+                    Price
+                </label>
+                <div class="relative">
+                    <span class="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-500 font-medium">$</span>
+                    <div class="pl-8">
+                        {{ form.price }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Is Sold (for edit form) -->
+            {% if form.is_sold %}
+                <div class="bg-gray-50 rounded-xl p-6">
+                    <label class="flex items-center space-x-3">
+                        {{ form.is_sold }}
+                        <div>
+                            <span class="text-sm font-semibold text-gray-900">Mark as sold</span>
+                            <p class="text-xs text-gray-600">Check this box if the item has been sold</p>
+                        </div>
+                    </label>
+                </div>
+            {% endif %}
+
+            <!-- Error Messages -->
+            {% if form.errors or form.non_field_errors %}
+                <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-exclamation-triangle text-red-600 mr-2"></i>
+                        <h3 class="font-semibold text-red-900">Please fix the following errors:</h3>
+                    </div>
+                    <ul class="space-y-1 text-sm text-red-700">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <li>{{ field.label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- Submit Button -->
+            <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+                <a href="{% url 'dashboard:index' %}" class="text-gray-600 hover:text-gray-800 font-medium transition-colors duration-200">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Cancel
+                </a>
+                <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-200 transform hover:scale-105 flex items-center space-x-2">
+                    <i class="fas fa-check"></i>
+                    <span>{% if title == 'New item' %}List Item{% else %}Update Item{% endif %}</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Tips -->
+    <div class="mt-8 bg-blue-50 border border-blue-200 rounded-2xl p-6">
+        <h3 class="font-semibold text-blue-900 mb-3 flex items-center">
+            <i class="fas fa-lightbulb mr-2"></i>
+            Tips for a Great Listing
+        </h3>
+        <ul class="space-y-2 text-sm text-blue-800">
+            <li class="flex items-start space-x-2">
+                <i class="fas fa-check text-blue-600 mt-0.5"></i>
+                <span>Use high-quality, well-lit photos from multiple angles</span>
+            </li>
+            <li class="flex items-start space-x-2">
+                <i class="fas fa-check text-blue-600 mt-0.5"></i>
+                <span>Write a detailed, honest description of the item's condition</span>
+            </li>
+            <li class="flex items-start space-x-2">
+                <i class="fas fa-check text-blue-600 mt-0.5"></i>
+                <span>Research similar items to set a competitive price</span>
+            </li>
+            <li class="flex items-start space-x-2">
+                <i class="fas fa-check text-blue-600 mt-0.5"></i>
+                <span>Respond quickly to buyer inquiries to build trust</span>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
